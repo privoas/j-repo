@@ -7,6 +7,64 @@
   <title>Vue To-Do Application</title>
 </head>
 <body>
-  
+  <div id="app">
+    <h1>{{hiName}}</h1>
+    <p>Welcome {{fullName}}</p>
+    <div>
+      <h2>Items in ToDo</h2>
+      <ul>
+        <li v-for="item in todoItems"
+          @click="showAlert">
+          <div>
+            <a v-bind:href="'/' + item">
+              <h3>{{item}}</h3>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        firstName: 'Patrick',
+        lastName: 'Wow',
+        message: 'Hello World! I\'m Here Now.',
+        todoItems: [
+          'Go To the Market',
+          'Drink Tea',
+          'Buy Bread',
+          'Buy Milo Sachets (GHC 1.00)'
+        ]
+      },
+      computed: {
+        fullName: {
+          get: function() {
+            return this.firstName + ' ' + this.lastName;
+          },
+          set: function(name) {
+            const names = name.split(' ');
+            this.firstName = names[0];
+            this.lastName = names[1];
+          }
+        },
+        hiName: function() {
+          return 'Hi ' + this.firstName
+        }
+      },
+      watch: {
+        todoItems: function(oldItems, newItems) {
+          console.log(oldItems.join(','), newItems.join(';'));
+        }
+      },
+      methods: {
+        showAlert: function(e) {
+          alert('Hello There')
+        }
+      }
+    });
+  </script>
 </body>
 </html>
